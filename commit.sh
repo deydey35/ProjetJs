@@ -9,4 +9,4 @@ echo "COMMIT DU FICHIER - entrez le commit du fichier CTRL+C pour annuler"
 read commit 
 git add .
 git commit -m "$commit"
-git push origin master
+git push origin main
