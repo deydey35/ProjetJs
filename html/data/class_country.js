@@ -6,6 +6,7 @@ class Country {
         this._continent = continent
         this._population = population
         this._paysVoisin = paysVoisins
+        this._allCountries = []
     }
 
     get codeAlpha3 () {
