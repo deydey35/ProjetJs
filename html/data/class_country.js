@@ -1,11 +1,14 @@
 class Country {
-    constructor (codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins){
+    constructor (codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins, superficie, langages, monnaies){
         this._codeAlpha3 = codeAlpha3
         this._nomFrancais = nomFrancais
         this._capitale = capitale
         this._continent = continent
         this._population = population
         this._paysVoisins = paysVoisins
+        this._superficie = superficie
+        this._langages = langages
+        this._monnaies = monnaies
     }
 
     static all_countries = {}
@@ -33,24 +36,41 @@ class Country {
     get paysVoisins () {
         return this.paysVoisinsTraduits()
     }
+
+    getBorders() {
+        let listePaysVoisins = []
+        this._paysVoisins.forEach(element => {
+            listePaysVoisins.push(Country.all_countries[element])
+        })
+        console.log(listePaysVoisins)
+    }
+
+    getPopDensity(){
+        return this._population / parseFloat(this._superficie)
+    }
+
+    getCurrencies() {
+        return this._monnaies
+    }
+
+    getLanguages() {
+        return this._langages
+    }
     
     get paysVoisinsTraduits () {
         let paysVoisinsTraduits = []
-        this._paysVoisins.forEach((element,index) => {
-            console.log(index);
-            
-            if (index == this._paysVoisins.lenght) {
+        if (this._paysVoisins.length === 0){
+            paysVoisinsTraduits.push('Aucuns pays voisins')
+        }else{
+            this._paysVoisins.forEach((element) => {
                 paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais)
-                    
-            }else{
-                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais + ', ')
-            }
-        })
+            })
+        }
         return paysVoisinsTraduits
     }
-
+    
     toString() {
-        return this._codeAlpha3 +', '+ this._nomFrancais +', '+ this._capitale +', '+ this._continent +', '+ this._population + ' hab, (' + this.paysVoisins + ')'
+        return`${this._codeAlpha3}, ${this._nomFrancais}, ${this._capitale}, ${this._continent}, ${this._population} hab, ( ${this.paysVoisinsTraduits} )`
     }
 
     static fill_countries(countries) {
@@ -61,11 +81,15 @@ class Country {
                 element["capital"],
                 element["subregion"],
                 element["population"],
-                element["borders"]
+                element["borders"],
+                element["area"], 
+                element["languages"],
+                element["currencies"]
             )
         })
     }
 }
 Country.fill_countries(countries)
-console.log(Country.all_countries["FRA"].toString())
+// console.table(Country.all_countries)
+console.log(Country.all_countries["AFG"].getLanguages())
 
