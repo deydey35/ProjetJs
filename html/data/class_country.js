@@ -9,6 +9,7 @@ class Country {
         this._superficie = superficie
         this._langages = langages
         this._monnaies = monnaies
+
     }
 
     static all_countries = {}
@@ -51,6 +52,20 @@ class Country {
 
     getCurrencies() {
         return this._monnaies
+    
+    get paysVoisinsTraduits () {
+        let paysVoisinsTraduits = []
+        this._paysVoisins.forEach((element,index) => {
+            console.log(index);
+            
+            if (index == this._paysVoisins.lenght) {
+                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais)
+                    
+            }else{
+                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais + ', ')
+            }
+        })
+        return paysVoisinsTraduits
     }
 
     getLanguages() {
@@ -85,11 +100,12 @@ class Country {
                 element["area"], 
                 element["languages"],
                 element["currencies"]
+                element["borders"]
             )
         })
     }
 }
 Country.fill_countries(countries)
-// console.table(Country.all_countries)
 console.log(Country.all_countries["AFG"].getLanguages())
+console.log(Country.all_countries["FRA"].toString())
 
