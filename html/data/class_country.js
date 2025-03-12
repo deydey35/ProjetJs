@@ -52,8 +52,8 @@ class Country {
 
     getCurrencies() {
         return this._monnaies
-    
-    get paysVoisinsTraduits () {
+    }
+    paysVoisinsTraduits () {
         let paysVoisinsTraduits = []
         this._paysVoisins.forEach((element,index) => {
             console.log(index);
@@ -99,13 +99,11 @@ class Country {
                 element["borders"],
                 element["area"], 
                 element["languages"],
-                element["currencies"]
+                element["currencies"],
                 element["borders"]
             )
         })
     }
 }
-Country.fill_countries(countries)
-console.log(Country.all_countries["AFG"].getLanguages())
-console.log(Country.all_countries["FRA"].toString())
+
 
