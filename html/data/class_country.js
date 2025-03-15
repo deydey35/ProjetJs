@@ -216,5 +216,3 @@ function fill_countries() {
 
 // Appel de la fonction permettant d'initialiser le tableau avec le fichier JSON comportant les pays
 fill_countries()
-
-console.log(Country.all_countries["GRL"].toString())
