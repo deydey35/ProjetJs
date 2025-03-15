@@ -1,4 +1,5 @@
 class Country {
+
     constructor (codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins, superficie, langages, monnaies){
         this._codeAlpha3 = codeAlpha3
         this._nomFrancais = nomFrancais
@@ -35,50 +36,41 @@ class Country {
     }
 
     get paysVoisins () {
-        return this.paysVoisinsTraduits()
+        return this._paysVoisins
     }
-
-    getBorders() {
-        let listePaysVoisins = []
-        this._paysVoisins.forEach(element => {
-            listePaysVoisins.push(Country.all_countries[element])
-        })
-        console.log(listePaysVoisins)
-    }
-
+    
     getPopDensity(){
         return this._population / parseFloat(this._superficie)
     }
 
-    getCurrencies() {
-        return this._monnaies
+    getBorders() {
+        let listePaysVoisins = []
+        if (this._paysVoisins != undefined) {
+            this._paysVoisins.forEach(element => {
+                listePaysVoisins.push(Country.all_countries[element])
+            })
+        }
+        return listePaysVoisins
     }
-    paysVoisinsTraduits () {
-        let paysVoisinsTraduits = []
-        this._paysVoisins.forEach((element,index) => {
-            console.log(index);
-            
-            if (index == this._paysVoisins.lenght) {
-                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais)
-                    
-            }else{
-                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais + ', ')
-            }
-        })
-        return paysVoisinsTraduits
+
+    getCurrencies() {
+        //Avec les objects currency
+        return this._monnaies
     }
 
     getLanguages() {
+        //Avec les objects languages
         return this._langages
     }
-    
+
     get paysVoisinsTraduits () {
         let paysVoisinsTraduits = []
-        if (this._paysVoisins.length === 0){
+        const voisins = this.getBorders()
+        if (voisins.length == 0) {
             paysVoisinsTraduits.push('Aucuns pays voisins')
-        }else{
-            this._paysVoisins.forEach((element) => {
-                paysVoisinsTraduits.push(Country.all_countries[element].nomFrancais)
+        } else {
+            voisins.forEach((element) => {
+                paysVoisinsTraduits.push(element.nomFrancais)
             })
         }
         return paysVoisinsTraduits
@@ -87,23 +79,90 @@ class Country {
     toString() {
         return`${this._codeAlpha3}, ${this._nomFrancais}, ${this._capitale}, ${this._continent}, ${this._population} hab, ( ${this.paysVoisinsTraduits} )`
     }
-
-    static fill_countries(countries) {
-        countries.forEach(element => {
-            let key = element["alpha3Code"]
-            Country.all_countries[key] = new Country(key, 
-                element["translations"]["fr"],
-                element["capital"],
-                element["subregion"],
-                element["population"],
-                element["borders"],
-                element["area"], 
-                element["languages"],
-                element["currencies"],
-                element["borders"]
-            )
-        })
-    }
 }
 
+function fill_countries() {
+
+    countries.forEach(element => {
+
+        // Enregistrement de la clé du pays trouvé
+        let key = element["alpha3Code"]
+
+        // Déclaration des variables pour stocker les différentes informations trouvées
+        let nomFrancais = ""
+        let capital = ""
+        let region = ""
+        let population = ""
+        let borders = []
+        let area = -1.0
+        let languages = []
+        let currencies = []
+
+        // Test pour le nom français
+        if (element["translations"]["fr"] == undefined) {
+            nomFrancais = undefined
+        } else {
+            nomFrancais = element["translations"]["fr"]
+        }
+
+        if (element["capital"] == undefined) {
+            capital = undefined
+        } else {
+            capital = element["capital"]
+        }
+
+        if (element["region"] == undefined) {
+            region = undefined
+        } else {
+            region = element["region"]
+        }
+
+        if (element["population"] == undefined) {
+            population = undefined
+        } else {
+            population = element["population"]
+        }
+
+        if (element["borders"] == undefined) {
+            borders = undefined
+        } else {
+            borders = element["borders"]
+        }
+
+        if (element["area"] == undefined) {
+            area = undefined
+        } else {
+            area = element["area"]
+        }
+
+        if (element["languages"] == undefined) {
+            languages = undefined
+        } else {
+            languages = element["languages"]
+        }
+
+        if (element["currencies"] == undefined) {
+            currencies = undefined
+        } else {
+            currencies = element["currencies"]
+        }
+
+        let pays = new Country(key,
+            nomFrancais,
+            capital,
+            region,
+            population,
+            borders,
+            area,
+            languages,
+            currencies
+        )
+
+        Country.all_countries[key] = pays
+    })
+}
+
+fill_countries()
+
+console.log(Country.all_countries["GBR"].toString())
 
