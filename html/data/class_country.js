@@ -1,5 +1,19 @@
 class Country {
 
+    /**
+     * 
+     * @param {le code du pays} codeAlpha3 
+     * @param {le nom français traduit du pays} nomFrancais 
+     * @param {la capitale du pays} capitale 
+     * @param {le continent du pays} continent 
+     * @param {la population du pays} population 
+     * @param {les pays voisins} paysVoisins 
+     * @param {la superficie du pays} superficie 
+     * @param {les langues parlés} langages 
+     * @param {les monnaies utilisées} monnaies 
+     * @param {le lien menant au drapeau} lienImage 
+     * @param {l'extension de domaine utilisé} domain 
+     */
     constructor (codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins, superficie, langages, monnaies, lienImage, domain){
         this._codeAlpha3 = codeAlpha3
         this._nomFrancais = nomFrancais
@@ -14,6 +28,9 @@ class Country {
         this._domain = domain
     }
 
+    /**
+     * Tableau statique contenant tous les pays du fichier JSON
+     */
     static all_countries = {}
 
     /**
