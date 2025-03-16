@@ -148,9 +148,13 @@ class Country {
      * Permet de donner toutes les monnaies utilisées par le pays
      * @returns les monnaies du pays sous forme d'objets Currency
      */
-    getCurrencies() {
-        //Avec les objects currency
-        return this._currencies
+    get getCurrencies() {
+        const currencies = []
+        this._currencies.forEach(element => {
+            let currency = Currency.all_currencies[element["code"]]
+            currencies.push(currency)
+        })
+        return currencies
     }
 
     /**
