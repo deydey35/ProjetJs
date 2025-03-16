@@ -1,26 +1,43 @@
 class Country {
 
-    constructor (codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins, superficie, langages, monnaies, lienImage, domain){
+    /**
+     * 
+     * @param {le code du pays} codeAlpha3 
+     * @param {le nom français traduit du pays} frenchName 
+     * @param {la capitale du pays} capitale 
+     * @param {le region du pays} region 
+     * @param {la population du pays} population 
+     * @param {les pays voisins} borders 
+     * @param {la superficie du pays} area 
+     * @param {les langues parlés} laguages 
+     * @param {les currencies utilisées} currencies 
+     * @param {le lien menant au drapeau} linkToImage 
+     * @param {l'extension de domaine utilisé} domainExtension 
+     */
+    constructor(codeAlpha3, frenchName, capitale, region, population, borders, area, languages, currencies, linkToImage, domainExtension) {
         this._codeAlpha3 = codeAlpha3
-        this._nomFrancais = nomFrancais
+        this._frenchName = frenchName
         this._capitale = capitale
-        this._continent = continent
+        this._region = region
         this._population = population
-        this._paysVoisins = paysVoisins
-        this._superficie = superficie
-        this._langages = langages
-        this._monnaies = monnaies
-        this._lienImage = lienImage
-        this._domain = domain
+        this._borders = borders
+        this._area = area
+        this._languages = languages
+        this._currencies = currencies
+        this._linkToImage = linkToImage
+        this._domainExtension = domainExtension
     }
 
+    /**
+     * Tableau statique contenant tous les pays du fichier JSON
+     */
     static all_countries = {}
 
     /**
      * Permet d'accèder à la propriété codeAlpha3 du pays
      * @return codeAlpha3
      */
-    get codeAlpha3 () {
+    get codeAlpha3() {
         return this._codeAlpha3
     }
 
@@ -28,15 +45,15 @@ class Country {
      * Permet d'accèder à la propriété nomFrancais du pays
      * @return nomFrançais
      */
-    get nomFrancais () {
-        return this._nomFrancais
+    get frenchName() {
+        return this._frenchName
     }
 
     /**
      * Permet d'accèder à la propriété capitale du pays
      * @return capitale
      */
-    get capitale () {
+    get capitale() {
         return this._capitale
     }
 
@@ -44,15 +61,15 @@ class Country {
      * Permet d'accèder à la propriété continent du pays
      * @return continent
      */
-    get continent () {
-        return this._continent
+    get region() {
+        return this._region
     }
 
     /**
      * Permet d'accèder à la propriété population du pays
      * @return population
      */
-    get population () {
+    get population() {
         return this._population
     }
 
@@ -60,56 +77,56 @@ class Country {
      * Permet d'accèder à la propriété pays voisins du pays
      * @return paysVoisins
      */
-    get paysVoisins () {
-        return this._paysVoisins
+    get borders() {
+        return this._borders
     }
 
     /**
      * Permet d'accèder à la propriété superficie du pays
      * @return superficie
      */
-    get superficie () {
-        return this._superficie
+    get area() {
+        return this._area
     }
 
     /**
      * Permet d'accèder à la propriété langage du pays
      * @return langages
      */
-    get langages () {
-        return this._langages
+    get languages() {
+        return this._languages
     }
 
     /**
      * Permet d'accèder à la propriété monnaies du pays
      * @return monnaies
      */
-    get monnaies () {
-        return this._monnaies
+    get currencies() {
+        return this._currencies
     }
 
     /**
      * Permet d'accèder à la propriété lienImage du pays
      * @return lienImage
      */
-    get lienImage () {
-        return this._lienImage
+    get linkToImage() {
+        return this._linkToImage
     }
 
     /**
      * Permet d'accèder à la propriété domain du pays
      * @return domain
      */
-    get domain () {
-        return this._domain
+    get domainExtension() {
+        return this._domainExtension
     }
-    
+
     /**
      * Permet de donner la population diviser par la superficie
      * @returns La densité de population
      */
-    getPopDensity(){
-        return this._population / parseFloat(this._superficie)
+    getPopDensity() {
+        return this._population / parseFloat(this._area)
     }
 
     /**
@@ -117,23 +134,27 @@ class Country {
      * @returns la liste des pays voisins 
      */
     getBorders() {
-        let listePaysVoisins = []
-        if (this._paysVoisins != undefined) {
-            this._paysVoisins.forEach(element => {
+        let bordersList = []
+        if (this._borders != undefined) {
+            this._borders.forEach(border => {
                 // Ajout dans le tableau des objets Country correpondant au codeAlpha3
-                listePaysVoisins.push(Country.all_countries[element])
+                bordersList.push(Country.all_countries[border])
             })
         }
-        return listePaysVoisins
+        return bordersList
     }
 
     /**
      * Permet de donner toutes les monnaies utilisées par le pays
      * @returns les monnaies du pays sous forme d'objets Currency
      */
-    getCurrencies() {
-        //Avec les objects currency
-        return this._monnaies
+    get getCurrencies() {
+        const currencies = []
+        this._currencies.forEach(element => {
+            let currency = Currency.all_currencies[element["code"]]
+            currencies.push(currency)
+        })
+        return currencies
     }
 
     /**
@@ -142,37 +163,37 @@ class Country {
      */
     getLanguages() {
         //Avec les objects languages
-        return this._langages
+        return this._languages
     }
 
     /**
      * Permet de donner la traduction en français des code des pays
      * @returns le nom des pays en français des voisins du pays 
      */
-    get paysVoisinsTraduits () {
-        let paysVoisinsTraduits = []
-        
+    get traductionOfBorders() {
+        let traductionOfBorders = []
+
         // Récupération des code des pays voisins 
         const voisins = this.getBorders()
-        
+
         //Vérification si la liste des voisins est nulle
         if (voisins.length == 0) {
-            paysVoisinsTraduits.push('Aucuns pays voisins')
+            traductionOfBorders.push('Aucuns pays voisins')
         } else {
             // Ajout dans le tableau le nomFrançais des pays voisins
-            voisins.forEach((element) => {
-                paysVoisinsTraduits.push(element.nomFrancais)
+            voisins.forEach(border => {
+                traductionOfBorders.push(border.frenchName)
             })
         }
-        return paysVoisinsTraduits
+        return traductionOfBorders
     }
-    
+
     /**
      * Permet d'afficher un pays avec les indications fournies
      * @returns Une chaine avec le codeAlpha3, nomFrancais, capitale, continent, population, paysVoisins
      */
     toString() {
-        return` ${this._codeAlpha3}, ${this._nomFrancais}, ${this._capitale}, ${this._continent}, ${this._population} hab, ( ${this.paysVoisinsTraduits} ) `
+        return ` ${this._codeAlpha3}, ${this._frenchName}, ${this._capitale}, ${this._region}, ${this._population} hab, ( ${this.traductionOfBorders} ) `
     }
 }
 
@@ -184,7 +205,7 @@ function fill_countries() {
         let key = element["alpha3Code"]
 
         // Déclaration des variables pour stocker les différentes informations trouvées et test pour savoir si elles sont définies
-        let nomFrancais = element["translations"]["fr"] ? element["translations"]["fr"] : undefined
+        let frenchName = element["translations"]["fr"] ? element["translations"]["fr"] : undefined
         let capital = element["capital"] ? element["capital"] : undefined
         let region = element["region"] ? element["region"] : undefined
         let population = element["population"] ? element["population"] : undefined
@@ -192,21 +213,21 @@ function fill_countries() {
         let area = element["area"] ? element["area"] : undefined
         let langages = element["languages"] ? element["languages"] : undefined
         let currencies = element["currencies"] ? element["currencies"] : undefined
-        let lienImage = element["flags"]["svg"] ? element["flags"]["svg"] : undefined
-        let domaine = element["topLevelDomain"] ? element["topLevelDomain"] : undefined
+        let linkToImage = element["flags"]["svg"] ? element["flags"]["svg"] : undefined
+        let domainExtension = element["topLevelDomain"] ? element["topLevelDomain"] : undefined
 
         // Création du pays avec l'ensemble des valeurs nécessaires
         let pays = new Country(key,
-            nomFrancais,
+            frenchName,
             capital,
             region,
             population,
             borders,
             area,
             langages,
-            currencies, 
-            lienImage,
-            domaine
+            currencies,
+            linkToImage,
+            domainExtension
         )
 
         // Ajout du pays dans la variable de classe avec comme clé alpha3Code
