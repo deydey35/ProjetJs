@@ -151,8 +151,13 @@ class Country {
     get getCurrencies() {
         const currencies = []
         this._currencies.forEach(element => {
-            let currency = Currency.all_currencies[element["code"]]
-            currencies.push(currency)
+            // Vérification que la propriété existe
+            if (element["code"] !== undefined) {
+                // Récupération de la monnaie dans le tableau statique
+                let currency = Currency.all_currencies[element["code"]]
+                // Ajout de la langue dans le tableau
+                currencies.push(currency)
+            }
         })
         return currencies
     }
@@ -161,9 +166,18 @@ class Country {
      * Permet de donner toutes les langues parlées dans le pays
      * @returns les langues du pays sous la forme d'objet Language
      */
-    getLanguages() {
-        //Avec les objects languages
-        return this._languages
+    get getLanguages() {
+        const languages = []
+        this.languages.forEach(element => {
+             // Vérification que la propriété existe
+            if (element["iso639_2"] !== undefined) { 
+                // Récupération de la langue dans le tableau statique
+                let language = Language.all_languages[element["iso639_2"]]
+                // Ajout de la langue dans le tableau
+                languages.push(language)
+            }
+        })
+        return languages
     }
 
     /**
