@@ -4,6 +4,7 @@
 const all_countries = Country.all_countries
 
 /**
+ * Q1 - outsideTheContinent() : 
  * Tableau JS des pays (objets Country) dont au moins 
  * un pays frontalier n’est pas dans le même continent.
  */
@@ -46,3 +47,15 @@ function outsideTheContinent() {
 }
 
 console.table(outsideTheContinent())
+
+
+/**
+ * Q2 - moreNeighbors() :
+ * moreNeighbors() : Tableau des pays ayant le plus grand nombre de voisins.
+ * Affichez aussi les voisins
+ */
+
+
+function moreNeighbors() {
+    
+}
