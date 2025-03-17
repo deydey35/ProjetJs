@@ -225,7 +225,7 @@ function fill_countries() {
         let population = element["population"] ? element["population"] : undefined
         let borders = element["borders"] ? element["borders"] : undefined
         let area = element["area"] ? element["area"] : undefined
-        let langages = element["languages"] ? element["languages"] : undefined
+        let languages = element["languages"] ? element["languages"] : undefined
         let currencies = element["currencies"] ? element["currencies"] : undefined
         let linkToImage = element["flags"]["svg"] ? element["flags"]["svg"] : undefined
         let domainExtension = element["topLevelDomain"] ? element["topLevelDomain"] : undefined
@@ -238,7 +238,7 @@ function fill_countries() {
             population,
             borders,
             area,
-            langages,
+            languages,
             currencies,
             linkToImage,
             domainExtension

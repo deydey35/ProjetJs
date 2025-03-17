@@ -77,4 +77,5 @@ function fill_currencies(){
     })
 }
 
+// Appel de la fonction permettant d'initialiser les langues
 fill_currencies()
