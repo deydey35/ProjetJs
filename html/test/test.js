@@ -92,3 +92,32 @@ function moreNeighbors() {
 
 // Appel de la fonction 
 moreNeighbors()
+
+
+/**
+ * Q3 - neighborless() : Tableau des pays n’ayant aucun voisin
+ * Permet d'afficher les pays n'ayant aucuns voisins
+ * @return le tableau des pays n'ayant aucun voisin
+ */
+function neighborless() {
+    // Tableau contenant les futurs pays avec le plus de voisins
+    let neighborless = []
+
+    // Parcourts du tableau contenant les pays
+    Object.keys(all_countries).forEach(countryKey => {
+        
+        // Initailisation d'un pays
+        const country = all_countries[countryKey]
+
+        // Initialisation des voisins de pays
+        const borders = country["borders"]
+        
+        if (borders === undefined) {
+            neighborless.push(country)
+        }
+    })
+    return neighborless
+}
+
+console.log('\nPays n\'ayant pas de voisins')
+console.table(neighborless(),'_frenchName')
