@@ -90,4 +90,5 @@ function moreNeighbors() {
     })
 }
 
+// Appel de la fonction 
 moreNeighbors()
