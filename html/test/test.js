@@ -121,3 +121,48 @@ function neighborless() {
 
 console.log('\nPays n\'ayant pas de voisins')
 console.table(neighborless(),'_frenchName')
+
+
+/**
+ * Q4 - moreLanguages() : Tableau des pays parlant le plus de langues. 
+ * Affichez aussi les langues (objets Language)
+ * 
+ * Permet d'obtenir un tableau des pays ayant le plus grand nombre de langues dans leur pays
+ * @return le tableau contenant les pays avec le plus de langues parlées
+ */
+
+function moreLanguages() {
+    // Tableau ou seront ajouter les futurs objets Country
+    let countryWithMoreLanguages = []
+
+    // Variable contenant le plus grand nombre de langues
+    let maxLanguages = 0
+
+    // Parcourt du tableau de pays
+    Object.keys(all_countries).forEach(countryKey => {
+        // Initialisation de l'objet Country
+        const country = all_countries[countryKey]
+        // Récupération des langues du pays
+        const languagesOfCountry = country["languages"]
+        if (languagesOfCountry !== undefined) {
+            // Récupération de la longueur du tableau
+            const numberOfLanguages = languagesOfCountry.length
+            if (numberOfLanguages >= maxLanguages) {
+                maxLanguages = numberOfLanguages
+                // Ajout du pays
+                countryWithMoreLanguages.push(country)
+            }
+        }
+    })
+    return countryWithMoreLanguages
+}
+
+// Appel de la fonction et affichage du pays et des langues parlées
+console.log('Pays ou le plus de langues sont parlées')
+moreLanguages().forEach(country => {
+    console.log(country.toString())
+    console.log(country.getLanguages.toString())
+    console.log('\n')
+})
+
+
