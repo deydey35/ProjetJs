@@ -82,16 +82,15 @@ function moreNeighbors() {
         }
     })
 
-    // Affichage du pays + des ses voisins
-    console.log('Affichage des pays ayant le plus de voisin')
-    moreNeighbors.forEach(country => {
-        console.log()
-        console.log(`Les voisins de ${country["frenchName"]} sont ${country.traductionOfBorders}`)
-    })
+    return moreNeighbors
 }
 
-// Appel de la fonction 
-moreNeighbors()
+// Appel de la fonction Affichage du pays + des ses voisins
+console.log('Affichage des pays ayant le plus de voisin')
+moreNeighbors().forEach(country => {
+    console.log()
+    console.log(`Les voisins de ${country["frenchName"]} sont ${country.traductionOfBorders}`)
+})
 
 
 /**
@@ -121,3 +120,106 @@ function neighborless() {
 
 console.log('\nPays n\'ayant pas de voisins')
 console.table(neighborless(),'_frenchName')
+
+
+/**
+ * Q4 - moreLanguages() : Tableau des pays parlant le plus de langues. 
+ * Affichez aussi les langues (objets Language)
+ * 
+ * Permet d'obtenir un tableau des pays ayant le plus grand nombre de langues dans leur pays
+ * @return le tableau contenant les pays avec le plus de langues parlées
+ */
+
+function moreLanguages() {
+    // Tableau ou seront ajouter les futurs objets Country
+    let countryWithMoreLanguages = []
+
+    // Variable contenant le plus grand nombre de langues
+    let maxLanguages = 0
+
+    // Parcourt du tableau de pays
+    Object.keys(all_countries).forEach(countryKey => {
+        // Initialisation de l'objet Country
+        const country = all_countries[countryKey]
+        // Récupération des langues du pays
+        const languagesOfCountry = country["languages"]
+        if (languagesOfCountry !== undefined) {
+            // Récupération de la longueur du tableau
+            const numberOfLanguages = languagesOfCountry.length
+            if (numberOfLanguages >= maxLanguages) {
+                maxLanguages = numberOfLanguages
+                // Ajout du pays
+                countryWithMoreLanguages.push(country)
+            }
+        }
+    })
+    return countryWithMoreLanguages
+}
+
+// Appel de la fonction et affichage du pays et des langues parlées
+console.log('Pays ou le plus de langues sont parlées')
+moreLanguages().forEach(country => {
+    console.log(country.toString())
+    console.log(country.getLanguages.toString())
+    console.log('\n')
+})
+
+
+/**
+ * Q5 - withCommonLanguage() : Tableau des pays ayant au moins un voisin parlant l’une 
+ * de ses langues. Affichez aussi les pays voisins (objets Country) et les langues en question (objets Language)
+ * 
+ * Permet de donner les pays ou un voisins parle une des langues du pays 
+ * @returns tableau contenant les pays
+ */
+
+function withCommonLanguage() {
+    let withCommonLanguage = {}
+
+    Object.keys(all_countries).forEach(countryKey => {
+
+        // Récupération de l'objet Country
+        const country = all_countries[countryKey]
+
+        // Récupération du code des langues parlées dans le pays
+        const languagesOfCountry = country.getLanguages.map(
+            language => language["languageCode"]
+        )
+
+        // Réupération des voisins du pays
+        const bordersOfCountry = country.getBorders()
+        
+        if (languagesOfCountry.length > 0 && bordersOfCountry.length > 0) {
+            
+            // Parcourt des voisins
+            bordersOfCountry.forEach(border => {
+
+                // Récupération pour chaque voisins des langues
+                const languagesOfBorder = border.getLanguages.map(
+                    language => language["languageCode"]
+                )
+                //Récupération des langues communes au deux pays
+                const languageCommon = languagesOfCountry.filter( 
+                    language => languagesOfBorder.includes(language)
+                )
+
+                if (languageCommon.length > 0) {
+
+                    // Récupération de la langue commune
+                    let language = Language.all_languages[languageCommon[0]]
+                    
+                    // Ajout dans l'objet du voisin et de la langue commune
+                    withCommonLanguage[country.frenchName] = {
+                        voisinParlantMemeLangue : border,
+                        langueCommune: language
+                    }
+                }
+            })
+        }
+    })
+    return withCommonLanguage
+}
+
+// Affichage du tableau avec un voisin parlant au moins une même langue commune avec le pays
+console.log('\nAffichage des pays avec un voisins parlant la même langue qu\'un pays')
+console.table(withCommonLanguage())
