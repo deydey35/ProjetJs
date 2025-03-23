@@ -223,6 +223,3 @@ function withCommonLanguage() {
 // Affichage du tableau avec un voisin parlant au moins une même langue commune avec le pays
 console.log('\nAffichage des pays avec un voisins parlant la même langue qu\'un pays')
 console.table(withCommonLanguage())
-
-
-
