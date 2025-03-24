@@ -223,3 +223,64 @@ function withCommonLanguage() {
 // Affichage du tableau avec un voisin parlant au moins une même langue commune avec le pays
 console.log('\nAffichage des pays avec un voisins parlant la même langue qu\'un pays')
 console.table(withCommonLanguage())
+
+
+/**
+ * Q6 - withoutCommonCurrency() : Tableau des pays sans aucun voisin 
+ * ayant au moins une de ses monnaies.
+ * 
+ * @return un objet contenant les pays qui ont des voisins n'ayant pas au moins une seule de leur monnaie
+ */
+
+function withoutCommonCurrency() {
+    let withoutCommonCurrency = {}
+    
+    Object.keys(all_countries).forEach(countryKey => {
+
+        // Récupération de l'objet Country
+        const country = all_countries[countryKey]
+
+        // Récupération des monnaies du pays
+        const currenciesOfCountry = country.getCurrencies
+
+        // Récupération des voisins du pays
+        const bordersOfCountry = country.getBorders()
+
+        if (currenciesOfCountry !== undefined && bordersOfCountry !== undefined) {
+
+            // Parcourt de chaque voisins
+            bordersOfCountry.forEach(border => {
+
+                // Récupération des monnaies du voisin
+                const currenciesOfBorder = border.getCurrencies.map(
+                    currency => currency["code"]
+                )
+
+                if (currenciesOfBorder !== undefined) {
+                    // Récupération de la présence ou non de la monnaies dans
+                    const checkIfCurrencyCommon = currenciesOfCountry.some(currency => {
+                        return currenciesOfBorder.includes(currency["code"])
+                    })
+
+                    // Vérification de la non présence de la monnaies chez le voisin
+                    if (checkIfCurrencyCommon == false) {
+                        if (withoutCommonCurrency[country.frenchName] === undefined) {
+                            // Création de l'objet avec le pays
+                            withoutCommonCurrency[country.frenchName] = {
+                                voisinPasMemeMonnaie: []
+                            }
+                        }
+                        // Ajout du voisin
+                        withoutCommonCurrency[country.frenchName].voisinPasMemeMonnaie.push(border)
+                    }
+                }
+            })
+            
+        }
+    })
+    return withoutCommonCurrency
+}
+
+console.log('\n Pays dont les voisins n\'ont pas au moins une monnaie en commun')
+console.table(withoutCommonCurrency())
+
