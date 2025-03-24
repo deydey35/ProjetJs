@@ -153,6 +153,11 @@ class Country {
      */
     get getCurrencies() {
         const currencies = []
+
+        if (this._currencies === undefined) {
+            return undefined
+        }
+        
         this._currencies.forEach(element => {
             // Vérification que la propriété existe
             if (element["code"] !== undefined) {
