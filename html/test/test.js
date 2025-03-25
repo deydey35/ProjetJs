@@ -303,3 +303,28 @@ function sortingDecreasingDensity() {
 
 console.log('\nTableau des pays par ordre décroissant de densité de population')
 console.table(sortingDecreasingDensity())
+
+/**
+ * Q8 - moreTopLevelDomains() : Tableau des pays ayant plusieurs
+ * Top Level Domains Internet.
+ * 
+ * @return un tableau ayant les pays avec plusieurs top level domais
+ */
+
+function moreTopLevelDomains() {
+    let moreTopLevelDomains = {}
+
+    // Parcourt des pays
+    Object.values(all_countries).forEach(country => {
+        if (country["domainExtension"] !== undefined) {
+            if (country["domainExtension"].length > 1) {
+                // Ajout de pays ayant plusieurs topLevelDomain
+                moreTopLevelDomains[country.frenchName] = country["domainExtension"]
+            }
+        }
+    })
+    return moreTopLevelDomains
+}
+
+console.log('\nTableau des pays ayant plusieurs top level domain')
+console.table(moreTopLevelDomains())
