@@ -284,3 +284,22 @@ function withoutCommonCurrency() {
 console.log('\n Pays dont les voisins n\'ont pas au moins une monnaie en commun')
 console.table(withoutCommonCurrency())
 
+/**
+ * Q7 - sortingDecreasingDensity() : Tableau des pays triés par ordre 
+ * décroissant de densité de population.
+ * 
+ * @return Un objet contenant le tableau trié
+ */
+
+function sortingDecreasingDensity() {
+    // Récupération des valeurs de l'objet
+    const all_countries_sorted = Object.values(all_countries)
+    all_countries_sorted.sort((country1,country2) => {
+        // Comparaison des densitée
+        return country1.getPopDensity() - country2.getPopDensity()
+    })
+    return all_countries_sorted
+}
+
+console.log('\nTableau des pays par ordre décroissant de densité de population')
+console.table(sortingDecreasingDensity())

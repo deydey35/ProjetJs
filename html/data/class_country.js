@@ -126,8 +126,8 @@ class Country {
      * @returns La densité de population
      */
     getPopDensity() {
-        if (this.population === undefined || this.area === undefined){
-            return
+        if (this.population === undefined || this.area === undefined || this.area === 0){
+            return 0
         }
         return this._population / parseFloat(this._area)
     }
